@@ -1,0 +1,7 @@
+{
+  "name": "LinguaFlow AI",
+  "description": "A suite of real-time AI tools. Currently featuring an English Speaking Tutor designed for beginners.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
