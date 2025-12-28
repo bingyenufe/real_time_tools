@@ -4,6 +4,7 @@ import { ApiKeyProvider } from './contexts/ApiKeyContext';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { EnglishTutor } from './pages/EnglishTutor';
+import { KidsEnglish } from './pages/KidsEnglish';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/english-tutor" element={<EnglishTutor />} />
+            <Route path="/kids-english" element={<KidsEnglish />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>

@@ -7,6 +7,13 @@ export const EnglishTutor: React.FC = () => {
   const { connect, disconnect, isConnected, isSpeaking, error } = useGeminiLive();
   const navigate = useNavigate();
   
+  const handleConnect = () => {
+    connect({
+      voiceName: 'Kore',
+      systemInstruction: "You are a patient and encouraging English tutor. The user is a beginner and may take 2-3 seconds to find their words. DO NOT interrupt them during pauses. Wait until they stop speaking completely before responding. Speak slowly, clearly, and use simple vocabulary. Correct their grammar gently if needed, but focus on keeping the conversation flowing."
+    });
+  };
+  
   // Visualizer refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
@@ -136,7 +143,7 @@ export const EnglishTutor: React.FC = () => {
         <div className="flex items-center gap-4">
           {!isConnected ? (
             <button
-              onClick={connect}
+              onClick={handleConnect}
               className="flex items-center gap-3 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95"
             >
               <Play className="w-6 h-6 fill-current" />

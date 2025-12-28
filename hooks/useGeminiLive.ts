@@ -3,6 +3,11 @@ import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { createPcmBlob, decodeAudioData, base64ToUint8Array } from '../utils/audioUtils';
 import { useApiKey } from '../contexts/ApiKeyContext';
 
+interface ConnectConfig {
+  systemInstruction: string;
+  voiceName?: string;
+}
+
 export const useGeminiLive = () => {
   const { apiKey } = useApiKey();
   const [isConnected, setIsConnected] = useState(false);
@@ -44,7 +49,7 @@ export const useGeminiLive = () => {
     setIsSpeaking(false);
   }, []);
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async ({ systemInstruction, voiceName = 'Kore' }: ConnectConfig) => {
     if (!apiKey) {
       setError("Please enter your API Key first.");
       return;
@@ -158,10 +163,9 @@ export const useGeminiLive = () => {
         config: {
           responseModalities: [Modality.AUDIO],
           speechConfig: {
-            voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } }, // Kore is usually a calm voice
+            voiceConfig: { prebuiltVoiceConfig: { voiceName } },
           },
-          // CRITICAL: Instructions for patience
-          systemInstruction: "You are a patient and encouraging English tutor. The user is a beginner and may take 2-3 seconds to find their words. DO NOT interrupt them during pauses. Wait until they stop speaking completely before responding. Speak slowly, clearly, and use simple vocabulary. Correct their grammar gently if needed, but focus on keeping the conversation flowing.",
+          systemInstruction: systemInstruction,
         },
       });
 
