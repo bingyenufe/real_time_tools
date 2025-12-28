@@ -67,8 +67,14 @@ export const useGeminiLive = () => {
       outputNodeRef.current = outputAudioContextRef.current.createGain();
       outputNodeRef.current.connect(outputAudioContextRef.current.destination);
 
-      // Get Mic Stream
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Get Mic Stream with explicit Echo Cancellation to prevent AI from hearing itself
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: { 
+          echoCancellation: true, 
+          noiseSuppression: true, 
+          autoGainControl: true 
+        } 
+      });
       
       // Connect to Gemini Live
       sessionPromiseRef.current = ai.live.connect({
