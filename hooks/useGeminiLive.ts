@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { createPcmBlob, decodeAudioData, base64ToUint8Array } from '../utils/audioUtils';
+import { useApiKey } from '../contexts/ApiKeyContext';
 
 export const useGeminiLive = () => {
+  const { apiKey } = useApiKey();
   const [isConnected, setIsConnected] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false); // Model is speaking
   const [error, setError] = useState<string | null>(null);
@@ -43,9 +45,14 @@ export const useGeminiLive = () => {
   }, []);
 
   const connect = useCallback(async () => {
+    if (!apiKey) {
+      setError("Please enter your API Key first.");
+      return;
+    }
+
     try {
       setError(null);
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey });
       
       // Initialize Audio Contexts
       inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
@@ -163,7 +170,7 @@ export const useGeminiLive = () => {
       setError("Failed to initialize session.");
       setIsConnected(false);
     }
-  }, [disconnect]);
+  }, [apiKey, disconnect]);
 
   useEffect(() => {
     return () => {
