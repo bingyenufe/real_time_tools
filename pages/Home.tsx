@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mic, MessageSquare, Music, ArrowRight, Lock, Sparkles } from 'lucide-react';
+import { Mic, MessageSquare, ArrowRight, Lock, Sparkles, Rocket } from 'lucide-react';
 import { ToolCardProps } from '../types';
 
 const ToolCard: React.FC<ToolCardProps> = ({ title, description, icon, status, color, path }) => {
@@ -64,18 +64,19 @@ export const Home: React.FC = () => {
       color: 'bg-orange-500'
     },
     {
+      title: "小小科学家 (Curiosity Pal)",
+      description: "Why is the sky blue? Ask me anything in Chinese! I explain the world's wonders to curious minds.",
+      icon: <Rocket className="w-6 h-6" />,
+      status: 'active',
+      path: '/curiosity-pal',
+      color: 'bg-cyan-500'
+    },
+    {
       title: "Debate Partner",
       description: "Challenge your critical thinking by debating complex topics with an adaptive AI opponent.",
       icon: <MessageSquare className="w-6 h-6" />,
       status: 'coming-soon',
       color: 'bg-blue-500'
-    },
-    {
-      title: "Accent Coach",
-      description: "Advanced phoneme analysis to help you perfect your pronunciation in multiple languages.",
-      icon: <Music className="w-6 h-6" />,
-      status: 'coming-soon',
-      color: 'bg-pink-500'
     }
   ];
 
