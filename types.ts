@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface ApiKeyContextType {
   apiKey: string | null;
   setApiKey: (key: string) => void;
